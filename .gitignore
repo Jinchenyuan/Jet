@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# ignore path
+.vscode
+
+# ignore files
+Jet
+
+# ignore suffix
