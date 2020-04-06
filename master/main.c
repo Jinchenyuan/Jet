@@ -11,7 +11,7 @@ int read_conf(const char *p, dictionary *d)
         fprintf(stderr, "Need Cfg file, See README.");
         return -1;
     }
-    iniparser_dump(d);
+    iniparser_dump(d, stderr);
     return 0;
 }
 
