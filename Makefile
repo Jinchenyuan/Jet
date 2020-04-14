@@ -20,5 +20,5 @@ $(INI_TARGET) : $(INI_PATH)/dictionary.c $(INI_PATH)/iniparser.c | $(INI_PATH)
 
 #gcc main.c -L. -lhello -o main
 $(JET_TARGET) : $(JET_MASTER_PATH)/main.c
-	$(CC) $(CFLAGS) $(INI_TARGET) $^ -o $@
+	$(CC) $(CFLAGS) $^ $(INI_TARGET) -o $@
 

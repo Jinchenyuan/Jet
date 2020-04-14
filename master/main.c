@@ -8,7 +8,7 @@ int read_conf(const char *p, dictionary *d)
     d = iniparser_load(p);
     if (!d)
     {
-        fprintf(stderr, "Need Cfg file, See README.");
+        fprintf(stderr, "Need config file, See README.");
         return -1;
     }
     iniparser_dump(d, stderr);
