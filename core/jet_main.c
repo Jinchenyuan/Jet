@@ -1,5 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "jet_define.h"
 
 #include "../3rd/ini/iniparser.h"
 
