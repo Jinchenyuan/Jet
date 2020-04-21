@@ -1,4 +1,5 @@
 #include "jet_define.h"
+#include "jet_thread.h"
 
 #include "../3rd/ini/iniparser.h"
 
@@ -18,5 +19,7 @@ int main(int argc, char *argv[])
 {
     dictionary *d = NULL;
     read_conf("config/config.cfg", d);
+
+    thread_test();
     return 0;
 }
