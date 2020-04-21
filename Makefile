@@ -25,7 +25,7 @@ JET_CORE_PATH = core
 JET_CORE_SRC = jet_main.c jet_malloc.c jet_thread.c
 
 $(JET_TARGET) : $(foreach v, $(JET_CORE_SRC), $(JET_CORE_PATH)/$(v))
-	$(CC) $(CFLAGS) $^ $(INI_TARGET) -o $@
+	$(CC) -o $@ $^ $(INI_TARGET) $(CFLAGS)
 
 clean:
 	rm -f Jet
