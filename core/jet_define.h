@@ -2,15 +2,23 @@
 #define __JET_DEFINE_H_
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 
-typedef u_int32_t       jet_uint;
+typedef uint32_t       jet_uint;
 typedef int32_t         jet_int;
 
 typedef char            jet_char;
 typedef char            jet_bit;
 
 typedef int64_t         jet_lint;
-typedef u_int64_t       jet_ulint;
+typedef uint64_t       jet_ulint;
+
+
+struct spin_lock
+{
+    jet_uint lock;
+};
+
 
 #endif /*__JET_DEFINE_H_*/
