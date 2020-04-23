@@ -3,7 +3,7 @@
 #include "jet_lock.h"
 
 static jet_int share = 0;
-struct spin_lock lock;
+spinlock lock;
 void create_thread(pthread_t *t, void *(*start_routine)(void *), void *arg)
 {
     if (pthread_create(t, NULL, start_routine, arg)) {
