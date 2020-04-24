@@ -21,6 +21,28 @@
 
 #define SHM_DEFAULT_SIZE    4096
 
+#define GET_SIZE_BY_KEY(KEY)    \
+    ({jet_int ret;  \
+    switch (KEY)    \
+    {   \
+    case SHM_LOG_KEY:   \
+        ret = SHM_LOG_SIZE; \
+        break;  \
+    case SHM_TCP_KEY:   \
+        ret = SHM_TCP_SIZE; \
+        break;  \
+    case SHM_UDP_KEY:   \
+        ret = SHM_UDP_SIZE; \
+        break;  \
+    case SHM_HTTP_KEY:  \
+        ret = SHM_HTTP_SIZE;    \
+        break;  \
+    default:    \
+        ret = SHM_DEFAULT_SIZE; \
+        break;  \
+    }   \
+    ret;})
+
 
 void shm_pre_test();
 

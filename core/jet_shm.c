@@ -10,6 +10,12 @@ static inline void shm_init(jet_int shmfd, jet_int size)
     *++p = sizeof(jet_int) * 3 + 1;
 }
 
+static inline void shm_to_begin(int **p)
+{
+    jet_int begin = *(++*p);
+    (*p) += (begin - (sizeof(jet_int) + 1));
+}
+
 static inline jet_int shm_insert_overflow(int *p, jet_int size)
 {
 
@@ -19,7 +25,7 @@ static inline jet_int shm_insert_overflow(int *p, jet_int size)
 
 jet_int shm_get(jet_int key)
 {
-    jet_int shmfd = shmget(key, SHM_DEFAULT_SIZE, SHM_FLG_CHECK);
+    jet_int shmfd = shmget(key, GET_SIZE_BY_KEY(key), SHM_FLG_CHECK);
     if (shmfd != -1)
         return shmfd;
     else
@@ -27,6 +33,20 @@ jet_int shm_get(jet_int key)
 
 NOT_FOUND:
     return JET_ERROR;
+}
+
+void shm_del(jet_int key)
+{
+    jet_int shmfd = shm_get(key);
+    printf("del shmfd:%d\n", shmfd);
+    if (shmfd != JET_ERROR) {
+        void *addr = shmat(shmfd, NULL, 0);
+        if (addr != (void *)-1)
+        {
+            shmdt(addr);
+            shmctl(shmfd, IPC_RMID, 0) ;
+        }
+    }
 }
 
 jet_int shm_create(jet_int key, jet_uint size)
@@ -56,13 +76,8 @@ void shm_write(jet_int shmfd, shmchunk *sc)
 {
     jet_int *p = (jet_int*)shmat(shmfd, NULL, 0);
     assert((shm_insert_overflow(p, sc->size) == JET_OK));
-
-    jet_int shmsize = *p++;
-    jet_int begin = *p++;
-    jet_int end = *p;
-    p = p + (begin - sizeof(jet_int) * 2 + 1);
-
-    printf("shmsize:%d begin:%d end:%d\n", shmsize, begin, end);
+    shm_to_begin(&p);
+    printf("pos:%d\n", *p);
 }
 
 shmchunk* shm_read(jet_int shmfd)
@@ -78,4 +93,5 @@ void shm_pre_test()
     sc.size = 8;
     sc.data = NULL;
     shm_write(shmfd, &sc);
+    shm_del(SHM_LOG_KEY);
 }
