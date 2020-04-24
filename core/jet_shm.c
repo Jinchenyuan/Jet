@@ -10,13 +10,13 @@ static inline void shm_init(jet_int shmfd, jet_int size)
     *++p = sizeof(jet_int) * 3 + 1;
 }
 
-static inline void shm_to_begin(int **p)
+static inline void shm_to_begin(jet_int **p)
 {
     jet_int begin = *(++*p);
     (*p) += (begin - (sizeof(jet_int) + 1));
 }
 
-static inline jet_int shm_insert_overflow(int *p, jet_int size)
+static inline jet_int shm_insert_overflow(jet_int *p, jet_int size)
 {
 
 
