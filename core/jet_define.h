@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <errno.h>
+#include <assert.h>
 
 
 typedef uint32_t        jet_uint;
@@ -18,6 +20,8 @@ typedef uint16_t        jet_uint16;
 typedef int64_t         jet_lint;
 typedef uint64_t        jet_ulint;
 
+#define JET_OK      0
+#define JET_ERROR   -1
 
 typedef struct spinlock
 {
@@ -26,7 +30,6 @@ typedef struct spinlock
 
 typedef struct shmchunk
 {
-    jet_uint        pos;
     jet_uint        size;
     jet_char        *data;
 } shmchunk;

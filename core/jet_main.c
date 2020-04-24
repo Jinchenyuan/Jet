@@ -1,5 +1,6 @@
 #include "jet_define.h"
 #include "jet_thread.h"
+#include "jet_shm.h"
 
 #include "../3rd/ini/iniparser.h"
 
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
     dictionary *d = NULL;
     read_conf("config/config.cfg", d);
 
-    thread_test();
+    // thread_test();
+    shm_pre_test();
     return 0;
 }

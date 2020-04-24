@@ -22,7 +22,7 @@ $(INI_TARGET) : $(INI_PATH)/dictionary.c $(INI_PATH)/iniparser.c | $(INI_PATH)
 JET_MASTER_PATH = master
 JET_CORE_PATH = core
 
-JET_CORE_SRC = jet_main.c jet_malloc.c jet_thread.c
+JET_CORE_SRC = jet_main.c jet_malloc.c jet_thread.c jet_shm.c
 
 $(JET_TARGET) : $(foreach v, $(JET_CORE_SRC), $(JET_CORE_PATH)/$(v))
 	$(CC) -o $@ $^ $(INI_TARGET) $(CFLAGS)

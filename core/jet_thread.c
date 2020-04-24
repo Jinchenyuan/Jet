@@ -7,7 +7,7 @@ spinlock lock;
 void create_thread(pthread_t *t, void *(*start_routine)(void *), void *arg)
 {
     if (pthread_create(t, NULL, start_routine, arg)) {
-        fprintf(stderr, "create thread failed.");
+        fprintf(stderr, "create thread failed.\n");
         exit(1);
     }
 }
@@ -15,7 +15,7 @@ void create_thread(pthread_t *t, void *(*start_routine)(void *), void *arg)
 
 void* thread_func1(void *argv)
 {
-    // fprintf(stderr, (char*)argv, "\n");
+    
     jet_int i = 0;
     for (i = 0; i < 100000000; i++)
     {
@@ -25,6 +25,8 @@ void* thread_func1(void *argv)
             printf("share == 100000.\n");
         }
         spin_unlock(&lock);
+        fprintf(stderr, (char*)argv, "\n");
+        sleep(1);
     }
     
     return NULL;
@@ -33,6 +35,7 @@ void* thread_func1(void *argv)
 void* thread_func2(void *argv)
 {
     jet_int i = 0;
+    pause();
     for(i = 0; i < 100000000; i++) {
         // fprintf(stderr, (char*)argv, "\n");
         spin_lock(&lock);
