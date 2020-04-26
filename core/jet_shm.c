@@ -1,4 +1,3 @@
-#include <sys/sem.h>
 #include "jet_shm.h"
 
 static inline void shm_init(jet_int shmfd, jet_int size)
