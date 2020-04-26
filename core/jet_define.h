@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <assert.h>
+#include <string.h>
 
 
 typedef uint32_t        jet_uint;
@@ -30,8 +31,8 @@ typedef struct spinlock
 
 typedef struct shmchunk
 {
-    jet_uint        size;
-    jet_char        *data;
+    jet_int         size;
+    void            *data;
 } shmchunk;
 
 #endif /*__JET_DEFINE_H_*/
