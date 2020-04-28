@@ -15,6 +15,9 @@ void create_thread(pthread_t *t, void *(*start_routine)(void *), void *arg)
 
 void* thread_func1(void *argv)
 {
+    for (;;) {
+        sleep(1);
+    }
     
     jet_int i = 0;
     for (i = 0; i < 100000000; i++)

@@ -105,7 +105,7 @@ jet_int shm_create(jet_int key, jet_uint size)
 void shm_write(jet_int shmfd, shmchunk *sc)
 {
     jet_int *p = (jet_int*)shmat(shmfd, NULL, 0);
-    jet_int *p1 = p;
+    jet_int *kp = p;
     assert((shm_insert_overflow(p, sc->size + sizeof(sc->size)) == JET_OK));
 
     shm_to_begin(&p);
@@ -113,13 +113,13 @@ void shm_write(jet_int shmfd, shmchunk *sc)
     *p++ = sc->size;
     memcpy(p, sc->data, sc->size);
 
-    shm_end_move(p1, sc->size + sizeof(sc->size));
+    shm_end_move(kp, sc->size + sizeof(sc->size));
 }
 
 shmchunk* shm_read(jet_int shmfd)
 {
     jet_int *p = (jet_int*)shmat(shmfd, NULL, 0);
-    jet_int *p1 = p;
+    jet_int *kp = p;
     if (shm_data_exist(p) == JET_ERROR) {
         return NULL;
     }
@@ -130,7 +130,7 @@ shmchunk* shm_read(jet_int shmfd)
     sc->size = *p++;
     sc->data = malloc(sc->size);
     memcpy(sc->data, p, sc->size);
-    shm_begin_move(p1, sc->size + sizeof(sc->size));
+    shm_begin_move(kp, sc->size + sizeof(sc->size));
 
     return sc;
 }
