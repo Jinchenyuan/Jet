@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
     dictionary *d = NULL;
     read_conf("config/config.cfg", d);
 
-    thread_test();
+    // thread_test();
     // shm_pre_test();
-    // shm_create(SHM_LOG_KEY, SHM_LOG_SIZE);
-    // process_pre_test();
+    shm_create(SHM_LOG_KEY, SHM_LOG_SIZE);
+    process_pre_test();
     return 0;
 }
