@@ -1,6 +1,7 @@
 #include "jet_define.h"
 #include "jet_thread.h"
 #include "jet_shm.h"
+#include "jet_sem.h"
 #include "jet_process.h"
 #include "../worker/worker.h"
 
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
 
     // thread_test();
     // shm_pre_test();
-    shm_create(SHM_LOG_KEY, SHM_LOG_SIZE);
-    process_pre_test();
+    sem_pre_test();
+    // process_pre_test();
     return 0;
 }

@@ -1,10 +1,10 @@
-#include "jet_sem.h";
+#include "jet_sem.h"
 
 jet_int sem_get(jet_int key)
 {
-    jet_int semfd = semget(key, 1, SEM_FLG_CHECK);
-    if (semfd != -1)
-        return semfd;
+    jet_int semid = semget(key, 1, IPC_NOWAIT);
+    if (semid != -1)
+        return semid;
     else
         goto NOT_FOUND;
 NOT_FOUND:
@@ -13,20 +13,30 @@ NOT_FOUND:
 
 void sem_del(jet_int key)
 {
-    jet_int semfd = sem_get(key);
-    if (semfd != JET_ERROR) {
-        
+    jet_int semid = sem_get(key);
+    if (semid != JET_ERROR) {
+        semctl(semid, 0, IPC_RMID);
     }
-
 }
 
 jet_int sem_create(jet_int key)
 {
-    sem_del(key);
+    jet_int semid = semget(key, 1, IPC_CREAT|IPC_EXCL|IPC_NOWAIT|SEM_FLG_PERMS);
+    if (semid == -1) {
+        fprintf(stderr, "create sem failed. errno:%d\n", errno);
+        exit(1);
+    }
+
+    semctl(semid, 0, SETALL);
+
+    return semid;
 }
 
 /**************************************************test**************************************/
 void sem_pre_test()
 {
-    jet_int semid = semget(SEM_LOG_KEY, 1, 0666|IPC_EXCL|IPC_CREAT);
+    jet_int semid1 = sem_create(SEM_LOG_KEY);
+    jet_int semid2 = sem_get(SEM_LOG_KEY);
+    sem_del(SEM_LOG_KEY);
+    printf("create semid:%d, get semid:%d\n", semid1, semid2);
 }

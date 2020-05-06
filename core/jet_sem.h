@@ -6,7 +6,7 @@
 #include <sys/ipc.h>
 #include "jet_define.h"
 
-#define SEM_FLG_CHECK       0640
+#define SEM_FLG_PERMS       0660
 
 #define SEM_LOG_KEY         0x70001
 #define SEM_TCP_KEY         0x70002

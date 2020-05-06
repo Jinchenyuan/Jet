@@ -7,7 +7,7 @@
 #include "jet_define.h"
 
 
-#define SHM_FLG_CHECK       0640
+#define SHM_FLG_PERMS       0660
 
 #define SHM_LOG_KEY         0x70001
 #define SHM_TCP_KEY         0x70002

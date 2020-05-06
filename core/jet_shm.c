@@ -63,7 +63,7 @@ OVERFLOW:
 
 jet_int shm_get(jet_int key)
 {
-    jet_int shmfd = shmget(key, GET_SIZE_BY_KEY(key), SHM_FLG_CHECK);
+    jet_int shmfd = shmget(key, GET_SIZE_BY_KEY(key), SHM_FLG_PERMS);
     if (shmfd != -1)
         return shmfd;
     else
@@ -91,7 +91,7 @@ jet_int shm_create(jet_int key, jet_uint size)
     shm_del(key);
 
     jet_int shmfd = shm_get(key);
-    shmfd = shmget(key, size, SHM_FLG_CHECK|IPC_CREAT|IPC_EXCL);
+    shmfd = shmget(key, size, SHM_FLG_PERMS|IPC_CREAT|IPC_EXCL);
     if (shmfd == -1) {
         fprintf(stderr, "create shm failed. errno:%d\n", errno);
         exit(1);
