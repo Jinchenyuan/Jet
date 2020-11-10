@@ -6,8 +6,6 @@
 
 typedef void (*jet_process)(void *data);
 
-/********************************************test**********************************************/
-
-void process_pre_test();
+jet_int jet_fork(jet_process proc, void *data);
 
 #endif

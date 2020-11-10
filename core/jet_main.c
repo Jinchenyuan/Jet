@@ -7,6 +7,11 @@
 
 #include "../3rd/ini/iniparser.h"
 
+#include "../test/shm.h"
+#include "../test/thread.h"
+#include "../test/process.h"
+#include "../test/sem.h"
+
 int read_conf(const char *p, dictionary *d)
 {
     d = iniparser_load(p);
@@ -24,9 +29,9 @@ int main(int argc, char *argv[])
     dictionary *d = NULL;
     read_conf("config/config.cfg", d);
 
-    // thread_test();
+    thread_test();
     // shm_pre_test();
-    sem_pre_test();
+    // sem_pre_test();
     // process_pre_test();
     return 0;
 }

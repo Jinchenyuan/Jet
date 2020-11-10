@@ -13,7 +13,8 @@
 #define SEM_UDP_KEY         0x70003
 #define SEM_HTTP_KEY        0x70004
 
-/******************************************test************************************/
-void sem_pre_test();
+jet_int sem_get(jet_int key);
+void sem_del(jet_int key);
+jet_int sem_create(jet_int key);
 
 #endif

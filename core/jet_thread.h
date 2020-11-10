@@ -6,6 +6,4 @@
 
 void create_thread(pthread_t *t, void *(*start_routine)(void *), void *arg);
 
-void thread_test();
-
 #endif /*__JET_THREAD_H_*/
