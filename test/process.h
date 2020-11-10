@@ -10,24 +10,47 @@
 void process_pre_test()
 {
     //read worker
-    jet_int pid = jet_fork(worker_test_proc_read, "test read.");
-    if (pid != 0) {
-        jet_int ppid = getpid();
-        printf("create woker process pid:%d main pid:%d\n", pid, ppid);
+    shm_create(SHM_LOG_KEY, SHM_LOG_SIZE);
+    jet_int shmfd = shm_get(SHM_LOG_KEY);
+    if (shmfd == JET_ERROR) {
+        fprintf(stderr, "process_pre_test get shmfd failed.\n");
+        exit(1);
     }
+    else
+    {
+        printf("process_pre_test create shmfd:%d.\n", shmfd);
+    }
+
     //write woker
-    pid = jet_fork(worker_test_proc_write, "test write.");
+    jet_int pid = jet_fork(worker_test_proc_write, shmfd);
     if (pid != 0) {
         jet_int ppid = getpid();
         printf("create woker process pid:%d main pid:%d\n", pid, ppid);
     }
+    
+    //reader
+    for (;;) {
+        shmchunk *rsc = shm_read(shmfd);
+        if (rsc) {
+            printf("read rsc size:%d data:%s\n", rsc->size, (char*)rsc->data);
+            free(rsc->data);
+            free(rsc);
+        }
+        else {
+            sleep(1);
+        }
+    }
+
     jet_int status;
     for (;;) {
         pid = waitpid(-1, &status, WNOHANG);
         if (pid == 0) {
-            return;
+            goto TEST_OVER;
         }
     }
+
+TEST_OVER:
+    shm_del(SHM_LOG_KEY);
 }
 
 #endif

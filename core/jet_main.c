@@ -29,9 +29,9 @@ int main(int argc, char *argv[])
     dictionary *d = NULL;
     read_conf("config/config.cfg", d);
 
-    thread_test();
+    // thread_test();
     // shm_pre_test();
     // sem_pre_test();
-    // process_pre_test();
+    process_pre_test();
     return 0;
 }
