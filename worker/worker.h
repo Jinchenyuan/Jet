@@ -4,7 +4,7 @@
 
 
 /******************************************test*******************************/
-void worker_test_proc_read(void *data);
+void worker_test_proc_cycle(void *data);
 void worker_test_proc_write(void *data);
 
 #endif

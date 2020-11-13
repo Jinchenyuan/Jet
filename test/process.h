@@ -21,13 +21,20 @@ void process_pre_test()
         printf("process_pre_test create shmfd:%d.\n", shmfd);
     }
 
-    //write woker
+    //write worker
     jet_int pid = jet_fork(worker_test_proc_write, shmfd);
     if (pid != 0) {
         jet_int ppid = getpid();
-        printf("create woker process pid:%d main pid:%d\n", pid, ppid);
+        printf("create woker write process pid:%d main pid:%d\n", pid, ppid);
     }
-    
+
+    //cycle worker
+    pid = jet_fork(worker_test_proc_cycle, "cycle");
+    if (pid != 0) {
+        jet_int ppid = getpid();
+        printf("create woker cycle process pid:%d main pid:%d\n", pid, ppid);
+    }
+
     //reader
     for (;;) {
         shmchunk *rsc = shm_read(shmfd);
@@ -36,15 +43,17 @@ void process_pre_test()
             free(rsc->data);
             free(rsc);
         }
-        else {
-            sleep(1);
-        }
+        sleep(1);
+        // else {
+        //     sleep(1);
+        // }
     }
 
     jet_int status;
     for (;;) {
         pid = waitpid(-1, &status, WNOHANG);
         if (pid == 0) {
+            printf("worker process over!");
             goto TEST_OVER;
         }
     }
